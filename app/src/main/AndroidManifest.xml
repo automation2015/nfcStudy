@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="auto.cn.nfcstudy">
+
+    <!-- <uses-sdk android:minSdkVersion="10" /> -->
+    <uses-permission android:name="android.permission.NFC" />
+    <!-- <uses-feature> ：仅用于google应用商店发布时，需要配置 -->
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+
+            <!-- ①ACTION_NDEF_DISCOVERED -->
+            <!-- TNF_WELL_KNOWN RTD_URI -->
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="baidu.com"
+                    android:pathPrefix="/"
+                    android:scheme="http://www." />
+            </intent-filter>
+            <!-- TNF_WELL_KNOWN RTD_TEXT -->
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <!-- TNF_ABSOLUTE_URI -->
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="baidu."
+                    android:pathPrefix="/index.html"
+                    android:scheme="http://www." />
+            </intent-filter>
+            <!--             ②ACTION_TECH_DISCOVERED -->
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERD" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERD"
+                android:resource="@xml/nfc_tech_filter" />
+            <!-- ③ACTION_TAG_DISCOVERED -->
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERD" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AtyNfcReadNdef">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- ①ACTION_NDEF_DISCOVERED -->
+            <!-- TNF_WELL_KNOWN RTD_URI -->
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="*"
+                    android:pathPrefix="/"
+                    android:scheme="http://www." />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AtyWriteNdefMsg"></activity>
+        <activity android:name=".AtyReadNfcNonNdef"></activity>
+    </application>
+
+</manifest>
